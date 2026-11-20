@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suivi des présences – Cours à domicile</title>
+  <meta name="description" content="Plateforme de vérification des présences des enseignants intervenant à domicile : pointage par QR Code, contrôle serveur, géolocalisation, anomalies et rapports.">
+  <meta name="theme-color" content="#142D4E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23142D4E'/%3E%3Cpath d='M27 13 16 8 5 13l11 5 11-5z' fill='none' stroke='%2314B8A6' stroke-width='2.4' stroke-linejoin='round'/%3E%3Cpath d='M9 15v5c4 3 10 3 14 0v-5' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --marine: #142D4E; --bleu: #2563EB; --turquoise: #14B8A6; --gris: #F1F5F9; --gris-2: #E2E8F0;
+      --texte: #0F172A; --texte-2: #475569; --rouge: #DC2626; --orange: #D97706; --vert: #059669; --blanc: #fff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: var(--texte); background: var(--blanc); line-height: 1.6; font-size: 16px; }
+    a { color: var(--bleu); }
+    img { max-width: 100%; height: auto; }
+    .conteneur { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+    h1, h2, h3 { color: var(--marine); line-height: 1.25; margin: 0; }
+    h2 { font-size: clamp(24px, 3.2vw, 32px); margin-bottom: 12px; }
+    h3 { font-size: 18px; margin-bottom: 6px; }
+    p { margin: 0 0 12px; }
+    .chapo { color: var(--texte-2); font-size: 18px; max-width: 720px; }
+    section { padding: 72px 0; }
+    section.gris { background: var(--gris); }
+
+    /* En-tête */
+    header.barre { position: sticky; top: 0; z-index: 10; background: rgba(20, 45, 78, .97); backdrop-filter: blur(6px); }
+    header.barre .conteneur { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
+    .marque { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 700; }
+    .marque .logo { width: 34px; height: 34px; border-radius: 9px; background: var(--turquoise); display: grid; place-items: center; }
+    nav.liens { display: flex; gap: 20px; }
+    nav.liens a { color: #CBD5E1; text-decoration: none; font-size: 14px; font-weight: 500; }
+    nav.liens a:hover { color: #fff; }
+
+    /* Héros */
+    .heros { background: linear-gradient(160deg, var(--marine) 0%, #0F3A63 55%, #0E5D66 100%); color: #fff; padding: 80px 0 96px; }
+    .heros .grille { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+    .etiquette { display: inline-block; background: rgba(20, 184, 166, .18); color: #5EEAD4; border: 1px solid rgba(94, 234, 212, .35); padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; margin-bottom: 18px; }
+    .heros h1 { color: #fff; font-size: clamp(30px, 4.6vw, 46px); margin-bottom: 18px; }
+    .heros p { color: #CBD5E1; font-size: 18px; }
+    .boutons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+    .bouton { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 15px; }
+    .bouton.principal { background: var(--bleu); color: #fff; }
+    .bouton.principal:hover { background: #1D4ED8; }
+    .bouton.secondaire { background: rgba(255, 255, 255, .1); color: #fff; border: 1px solid rgba(255, 255, 255, .25); }
+    .apercu { position: relative; }
+    .apercu .ecran { border-radius: 12px; box-shadow: 0 30px 60px rgba(0, 0, 0, .35); width: 100%; display: block; border: 1px solid rgba(255, 255, 255, .15); }
+    .apercu .mobile { position: absolute; width: 30%; right: -16px; bottom: -40px; border-radius: 18px; border: 4px solid #0B1B30; box-shadow: 0 20px 40px rgba(0, 0, 0, .4); }
+
+    /* Problème */
+    .probleme { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 32px; }
+    .carte { background: #fff; border: 1px solid var(--gris-2); border-radius: 14px; padding: 22px; }
+    .carte .icone { width: 44px; height: 44px; border-radius: 11px; display: grid; place-items: center; margin-bottom: 14px; }
+    .carte p { color: var(--texte-2); margin: 0; font-size: 15px; }
+    .t-rouge { background: #FEF2F2; color: var(--rouge); } .t-orange { background: #FFF7ED; color: var(--orange); }
+    .t-bleu { background: #EFF4FF; color: var(--bleu); } .t-turq { background: #E6F7F5; color: #0F766E; } .t-vert { background: #ECFDF5; color: var(--vert); } .t-marine { background: #E8EDF5; color: var(--marine); }
+
+    /* Étapes */
+    .etapes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 36px; counter-reset: etape; }
+    .etape { position: relative; padding: 22px; background: #fff; border-radius: 14px; border: 1px solid var(--gris-2); }
+    .etape::before { counter-increment: etape; content: counter(etape); position: absolute; top: -14px; left: 22px; width: 30px; height: 30px; border-radius: 50%; background: var(--bleu); color: #fff; font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+    .etape p { color: var(--texte-2); font-size: 15px; margin: 0; }
+
+    /* Contrôles */
+    .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .liste-controles { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px; }
+    .liste-controles li { display: flex; gap: 12px; align-items: flex-start; }
+    .liste-controles .num { flex: none; width: 26px; height: 26px; border-radius: 7px; background: var(--marine); color: #fff; font-size: 13px; font-weight: 700; display: grid; place-items: center; margin-top: 1px; }
+    .capture { border-radius: 12px; border: 1px solid var(--gris-2); box-shadow: 0 16px 40px rgba(15, 23, 42, .12); width: 100%; display: block; }
+    .duo-mobile { display: flex; gap: 18px; justify-content: center; }
+    .duo-mobile img { width: 46%; max-width: 260px; border-radius: 22px; border: 5px solid var(--marine); box-shadow: 0 16px 40px rgba(15, 23, 42, .18); }
+    .situations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+    .situation { border-radius: 12px; padding: 16px; border-left: 4px solid; background: #fff; border-top: 1px solid var(--gris-2); border-right: 1px solid var(--gris-2); border-bottom: 1px solid var(--gris-2); }
+    .situation strong { display: block; margin-bottom: 4px; }
+    .situation span { color: var(--texte-2); font-size: 14px; }
+    .s-vert { border-left-color: var(--vert); } .s-orange { border-left-color: var(--orange); } .s-bleu { border-left-color: var(--bleu); }
+
+    /* Fonctionnalités */
+    .fonctions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 32px; }
+
+    /* Galerie */
+    .galerie { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 32px; }
+    figure { margin: 0; }
+    figcaption { color: var(--texte-2); font-size: 14px; margin-top: 10px; text-align: center; }
+    .note-demo { display: inline-block; margin-top: 8px; font-size: 13px; color: var(--texte-2); background: var(--gris); padding: 4px 10px; border-radius: 6px; }
+
+    /* Rôles */
+    table.roles { width: 100%; border-collapse: collapse; margin-top: 24px; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid var(--gris-2); }
+    .roles th, .roles td { padding: 12px 14px; border-bottom: 1px solid var(--gris-2); text-align: left; font-size: 15px; }
+    .roles th { background: var(--marine); color: #fff; font-weight: 600; }
+    .roles td.c { text-align: center; }
+    .oui { color: var(--vert); font-weight: 700; } .non { color: #94A3B8; }
+
+    /* Limites */
+    .encadre { background: #FFF7ED; border: 1px solid #FED7AA; border-radius: 14px; padding: 22px 24px; margin-top: 28px; }
+    .encadre h3 { color: #9A3412; }
+    .encadre p { color: #7C2D12; margin: 0; }
+
+    /* Technique */
+    .pile { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+    .pile .carte strong { display: block; color: var(--marine); }
+    .pile .carte span { color: var(--texte-2); font-size: 14px; }
+    pre { background: #0B1B30; color: #E2E8F0; padding: 18px 20px; border-radius: 12px; overflow-x: auto; font-size: 14px; line-height: 1.55; margin: 20px 0 0; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+    footer { background: var(--marine); color: #94A3B8; padding: 28px 0; font-size: 14px; }
+    footer .conteneur { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    footer a { color: #CBD5E1; }
+
+    @media (max-width: 900px) {
+      nav.liens { display: none; }
+      .heros .grille, .deux { grid-template-columns: 1fr; }
+      .apercu .mobile { right: 8px; bottom: -28px; }
+      .probleme, .fonctions, .situations { grid-template-columns: 1fr; }
+      .etapes, .pile { grid-template-columns: 1fr 1fr; }
+      .galerie { grid-template-columns: 1fr; }
+      section { padding: 56px 0; }
+    }
+    @media (max-width: 520px) {
+      .etapes, .pile { grid-template-columns: 1fr; }
+      .roles th, .roles td { padding: 10px 8px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="barre">
+    <div class="conteneur">
+      <a class="marque" href="#">
+        <span class="logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></span>
+        Suivi des présences
+      </a>
+      <nav class="liens">
+        <a href="#fonctionnement">Fonctionnement</a>
+        <a href="#controles">Contrôles</a>
+        <a href="#back-office">Back-office</a>
+        <a href="#securite">Sécurité</a>
+        <a href="#installation">Installation</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="heros">
+    <div class="conteneur grille">
+      <div>
+        <span class="etiquette">Cours à domicile · Abidjan</span>
+        <h1>Savoir, preuves à l'appui, si chaque cours a vraiment eu lieu.</h1>
+        <p>Une plateforme de pointage par QR Code qui vérifie automatiquement l'identité de l'enseignant, son affectation, son emploi du temps, l'heure et sa position — et signale chaque incohérence à l'administration.</p>
+        <div class="boutons">
+          <a class="bouton principal" href="#fonctionnement">Découvrir le fonctionnement</a>
+          <a class="bouton secondaire" href="https://github.com/dav9fulldev/Komenan">Code source</a>
+        </div>
+      </div>
+      <div class="apercu">
+        <img class="ecran" src="captures/02-tableau-de-bord.png" alt="Tableau de bord du back-office : enseignants actifs, cours programmés, présences, retards, absences présumées et anomalies" width="1440" height="1640">
+        <img class="mobile" src="captures/20-pointage-mobile.png" alt="Page de pointage sur téléphone" width="720" height="1480">
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="conteneur">
+      <h2>Le problème à résoudre</h2>
+      <p class="chapo">Des enseignants déclarent avoir dispensé un cours, des parents affirment le contraire, et l'administration n'a aucun moyen fiable de trancher.</p>
+      <div class="probleme">
+        <div class="carte">
+          <div class="icone t-rouge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></div>
+          <h3>Présences contestées</h3>
+          <p>Sans trace objective, chaque désaccord entre parent et enseignant reste parole contre parole.</p>
+        </div>
+        <div class="carte">
+          <div class="icone t-orange"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Retards et départs invisibles</h3>
+          <p>Les heures réelles d'arrivée et de départ ne sont ni mesurées ni justifiées.</p>
+        </div>
+        <div class="carte">
+          <div class="icone t-bleu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></div>
+          <h3>Aucun pilotage</h3>
+          <p>Impossible de mesurer la durée effective des cours ou la fiabilité par enseignant et par marché.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gris" id="fonctionnement">
+    <div class="conteneur">
+      <h2>Comment ça marche</h2>
+      <p class="chapo">Pas d'application à installer : l'enseignant utilise simplement l'appareil photo de son téléphone.</p>
+      <div class="etapes">
+        <div class="etape"><h3>Un QR Code par domicile</h3><p>L'administration génère et imprime un QR Code propre à chaque lieu d'intervention. Il ne contient qu'un jeton opaque, révocable — aucune donnée du parent.</p></div>
+        <div class="etape"><h3>Scan à l'arrivée</h3><p>L'enseignant scanne le code, saisit son numéro et son nom, autorise la localisation. Il ne choisit jamais le lieu ni le cours.</p></div>
+        <div class="etape"><h3>Vérification par le serveur</h3><p>Le serveur retrouve automatiquement l'intervention attendue et applique tous les contrôles avant de confirmer quoi que ce soit.</p></div>
+        <div class="etape"><h3>Scan au départ</h3><p>Le même QR Code, scanné à la fin du cours, clôture la séance et calcule la durée effective et un éventuel départ anticipé.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="controles">
+    <div class="conteneur deux">
+      <div>
+        <h2>Huit contrôles à chaque pointage</h2>
+        <p class="chapo">Aucun pointage n'est confirmé avant validation effective du serveur. Chaque tentative refusée est journalisée.</p>
+        <ul class="liste-controles">
+          <li><span class="num">1</span><span>Validité du QR Code (inconnu ou révoqué = refusé)</span></li>
+          <li><span class="num">2</span><span>Domicile correspondant au QR Code</span></li>
+          <li><span class="num">3</span><span>Identité : le nom doit correspondre au numéro enregistré</span></li>
+          <li><span class="num">4</span><span>Affectation de l'enseignant à ce domicile</span></li>
+          <li><span class="num">5</span><span>Créneau prévu à l'emploi du temps</span></li>
+          <li><span class="num">6</span><span>Heure du serveur — jamais celle du téléphone</span></li>
+          <li><span class="num">7</span><span>Position GPS, précision et distance au domicile</span></li>
+          <li><span class="num">8</span><span>Absence de double pointage et de séance ouverte ailleurs</span></li>
+        </ul>
+      </div>
+      <div class="duo-mobile">
+        <img src="captures/20-pointage-mobile.png" alt="Formulaire d'identification sur téléphone" width="720" height="1480">
+        <img src="captures/21-pointage-refuse.png" alt="Pointage refusé : identification impossible" width="720" height="1480">
+      </div>
+    </div>
+    <div class="conteneur">
+      <div class="situations">
+        <div class="situation s-vert"><strong>Arrivée à l'heure</strong><span>Contrôles conformes : l'arrivée est enregistrée et la séance s'ouvre.</span></div>
+        <div class="situation s-orange"><strong>Arrivée en retard</strong><span>Heure prévue, heure réelle et minutes de retard affichées ; justification obligatoire. Le retard constaté n'est jamais effacé.</span></div>
+        <div class="situation s-bleu"><strong>Arrivée anticipée</strong><span>L'enseignant doit patienter : la séance ne s'ouvre pas avant la fenêtre de pointage.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gris" id="back-office">
+    <div class="conteneur">
+      <h2>Un back-office complet</h2>
+      <p class="chapo">Une seule page de connexion ; le menu s'adapte au rôle (administrateur ou superviseur).</p>
+      <div class="fonctions">
+        <div class="carte"><div class="icone t-marine"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Référentiels</h3><p>Enseignants, marchés, parents et domiciles avec coordonnées GPS, affectations avec période de validité.</p></div>
+        <div class="carte"><div class="icone t-bleu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><h3>Emplois du temps</h3><p>Vues liste et calendrier, filtres, refus automatique des chevauchements et des trajets impossibles.</p></div>
+        <div class="carte"><div class="icone t-turq"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h3v3"/></svg></div><h3>QR Codes</h3><p>Génération, impression, téléchargement, renouvellement et révocation, avec historique complet.</p></div>
+        <div class="carte"><div class="icone t-vert"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><h3>Suivi des présences</h3><p>Heures prévues et réelles, retards, justifications, durée effective, journal GPS de chaque pointage.</p></div>
+        <div class="carte"><div class="icone t-rouge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></div><h3>Anomalies</h3><p>Retards, absences présumées, départs anticipés ou non pointés, QR invalides, GPS non conforme, doubles pointages — avec observations et traitement tracé.</p></div>
+        <div class="carte"><div class="icone t-orange"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg></div><h3>Rapports</h3><p>Présences par enseignant, retards, absences, durées effectives, statistiques par marché — export PDF et Excel.</p></div>
+      </div>
+
+      <div class="galerie">
+        <figure><img class="capture" src="captures/10-calendrier.png" alt="Vue calendrier hebdomadaire des emplois du temps" width="1440" height="900"><figcaption>Emplois du temps — vue calendrier avec le statut réel de chaque séance</figcaption></figure>
+        <figure><img class="capture" src="captures/19-detail-seance.png" alt="Détail d'une séance avec le journal des pointages et la position GPS" width="1440" height="1490"><figcaption>Détail d'une séance : journal des pointages, distance au domicile, observations</figcaption></figure>
+        <figure><img class="capture" src="captures/12-anomalies.png" alt="Liste des anomalies à examiner" width="1440" height="1920"><figcaption>Anomalies détectées automatiquement, classées par gravité</figcaption></figure>
+        <figure><img class="capture" src="captures/01-connexion.png" alt="Page de connexion du back-office" width="1440" height="900"><figcaption>Connexion unique ; le rôle est identifié automatiquement</figcaption></figure>
+      </div>
+      <p style="text-align:center"><span class="note-demo">Captures réalisées avec des données entièrement fictives (« DÉMO »).</span></p>
+
+      <h3 style="margin-top:48px">Deux profils administratifs</h3>
+      <table class="roles">
+        <thead><tr><th>Action</th><th class="c">Administrateur</th><th class="c">Superviseur</th></tr></thead>
+        <tbody>
+          <tr><td>Consulter enseignants, domiciles, affectations, plannings</td><td class="c oui">Oui</td><td class="c oui">Oui</td></tr>
+          <tr><td>Suivre les présences, retards et justifications</td><td class="c oui">Oui</td><td class="c oui">Oui</td></tr>
+          <tr><td>Examiner les anomalies, ajouter des observations</td><td class="c oui">Oui</td><td class="c oui">Oui</td></tr>
+          <tr><td>Créer ou modifier enseignants, domiciles, affectations, plannings</td><td class="c oui">Oui</td><td class="c non">Non</td></tr>
+          <tr><td>Générer, renouveler ou révoquer les QR Codes</td><td class="c oui">Oui</td><td class="c non">Non</td></tr>
+          <tr><td>Gérer les comptes, les permissions et les paramètres</td><td class="c oui">Oui</td><td class="c non">Non</td></tr>
+          <tr><td>Modifier l'historique des pointages</td><td class="c non">Non (personne)</td><td class="c non">Non</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="securite">
+    <div class="conteneur">
+      <h2>Fiabilité et sécurité</h2>
+      <div class="fonctions">
+        <div class="carte"><h3>Historique inaltérable</h3><p>Le journal des pointages et le journal d'audit sont en ajout seul : la base de données elle-même refuse toute modification ou suppression.</p></div>
+        <div class="carte"><h3>Heure du serveur</h3><p>Les retards, durées et départs sont calculés uniquement à partir de l'heure du serveur, jamais de celle déclarée par le téléphone.</p></div>
+        <div class="carte"><h3>Règles paramétrables</h3><p>Tolérance de retard, ouverture et fermeture du pointage, rayon GPS, durée maximale : réglables sans toucher au code.</p></div>
+        <div class="carte"><h3>Absences traitées, pas décrétées</h3><p>Une intervention sans arrivée devient « absence présumée à vérifier » ; la décision finale reste humaine et tracée.</p></div>
+        <div class="carte"><h3>Traçabilité complète</h3><p>Création, modification de planning ou d'affectation, QR Codes, traitement d'anomalie : chaque action est journalisée.</p></div>
+        <div class="carte"><h3>Testé contre la fraude</h3><p>30 tests automatisés : QR falsifié ou révoqué, usurpation d'identité, scans simultanés, position hors zone, jeton rejoué…</p></div>
+      </div>
+      <div class="encadre">
+        <h3>Ce que le système ne prétend pas faire</h3>
+        <p>Un QR Code photographié ou une position GPS falsifiée restent techniquement possibles. La plateforme rend la fraude beaucoup plus difficile et, surtout, <strong>trace chaque incohérence</strong> (position, identité, horaire) pour un examen humain. Elle ne rend pas la fraude impossible.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="gris" id="installation">
+    <div class="conteneur">
+      <h2>Architecture et installation</h2>
+      <div class="pile">
+        <div class="carte"><strong>Back-office</strong><span>React 18 + Vite</span></div>
+        <div class="carte"><strong>API</strong><span>Node.js + Express, documentée avec Swagger</span></div>
+        <div class="carte"><strong>Base de données</strong><span>MySQL 8, contraintes d'intégrité et déclencheurs</span></div>
+        <div class="carte"><strong>Pointage</strong><span>Page web mobile légère, sans installation</span></div>
+      </div>
+<pre><code># API
+cd backend && cp .env.example .env    # renseigner les secrets
+npm install && npm run migrate
+npm run creer-admin -- admin@exemple.ci "NOM" "Prénoms"
+npm start                              # http://localhost:4000 — /api/docs
+
+# Back-office
+cd frontend && npm install && npm run build   # servi par l'API</code></pre>
+      <p style="margin-top:16px">Le guide complet (base de données, données de démonstration, tests, mise en production) est dans le <a href="https://github.com/dav9fulldev/Komenan#readme">README du dépôt</a>. La plateforme nécessite un serveur Node.js et MySQL avec <strong>HTTPS</strong> (indispensable à la géolocalisation) ; cette page n'en est que la présentation.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="conteneur">
+      <span>Suivi des présences des enseignants à domicile — première version (MVP)</span>
+      <a href="https://github.com/dav9fulldev/Komenan">Dépôt GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>

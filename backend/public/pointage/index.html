@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#142D4E">
+  <title>Pointage du cours</title>
+  <link rel="stylesheet" href="/pointage-ressources/pointage.css">
+</head>
+<body>
+  <header class="entete">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+    </div>
+    <div>
+      <h1>Pointage du cours</h1>
+      <p id="horloge" class="sous-titre">Heure du serveur utilisée pour l'enregistrement</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- Étape 1 : identification -->
+    <section id="etape-identification" class="carte">
+      <h2>Identifiez-vous</h2>
+      <p class="aide">Le lieu du cours est reconnu automatiquement grâce au QR Code.</p>
+      <form id="form-identification" novalidate>
+        <label for="telephone">Numéro de téléphone</label>
+        <input id="telephone" name="telephone" type="tel" inputmode="tel" autocomplete="tel" placeholder="07 00 00 00 00" required>
+        <label for="nom">Nom et prénoms</label>
+        <input id="nom" name="nom" type="text" autocomplete="name" autocapitalize="words" placeholder="Ex. : KOUASSI Jean Marc" required>
+        <label class="case"><input type="checkbox" id="memoriser" checked> Se souvenir de moi sur ce téléphone</label>
+        <p id="erreur-identification" class="erreur" role="alert" hidden></p>
+        <button type="submit" class="bouton principal" id="bouton-valider">Valider mon pointage</button>
+      </form>
+      <p class="note">Votre position sera demandée pour vérifier votre présence au domicile. Autorisez la localisation lorsque le téléphone vous le propose.</p>
+    </section>
+
+    <!-- Attente -->
+    <section id="etape-attente" class="carte centre" hidden>
+      <div class="roue" aria-hidden="true"></div>
+      <p id="texte-attente">Vérification en cours…</p>
+    </section>
+
+    <!-- Justification requise -->
+    <section id="etape-justification" class="carte avertissement" hidden>
+      <h2 id="titre-justification">Retard constaté</h2>
+      <dl class="horaires">
+        <div><dt id="lib-prevue">Heure prévue</dt><dd id="j-prevue">—</dd></div>
+        <div><dt>Heure réelle</dt><dd id="j-reelle">—</dd></div>
+        <div><dt id="lib-ecart">Retard</dt><dd id="j-ecart">—</dd></div>
+      </dl>
+      <p id="j-message" class="aide"></p>
+      <form id="form-justification" novalidate>
+        <label for="justification">Justification (obligatoire)</label>
+        <textarea id="justification" rows="4" maxlength="2000" placeholder="Expliquez la raison…" required></textarea>
+        <p id="erreur-justification" class="erreur" role="alert" hidden></p>
+        <button type="submit" class="bouton principal" id="bouton-confirmer">Confirmer</button>
+        <button type="button" class="bouton secondaire" id="bouton-annuler-justif">Annuler</button>
+      </form>
+    </section>
+
+    <!-- Résultat -->
+    <section id="etape-resultat" class="carte" hidden>
+      <div id="icone-resultat" class="icone-resultat" aria-hidden="true"></div>
+      <h2 id="titre-resultat"></h2>
+      <p id="message-resultat"></p>
+      <dl id="details-resultat" class="horaires"></dl>
+      <p id="gps-resultat" class="note"></p>
+      <button type="button" class="bouton secondaire" id="bouton-recommencer">Retour</button>
+    </section>
+  </main>
+
+  <footer class="pied">Aucune donnée personnelle du parent n'est contenue dans ce QR Code.</footer>
+  <script src="/pointage-ressources/pointage.js"></script>
+</body>
+</html>
