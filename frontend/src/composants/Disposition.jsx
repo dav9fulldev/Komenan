@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, Users, Store, Home, Link2, CalendarDays, ClipboardCheck, AlertTriangle, FileText, BarChart3,
-  UserCog, ScrollText, Settings, LogOut, Menu as IconeMenu, GraduationCap,
+  UserCog, ScrollText, Settings, LogOut, Menu as IconeMenu,
 } from 'lucide-react';
 import { useAuth } from '../auth.jsx';
 import { useDonnees } from '../hooks.js';
@@ -43,8 +43,8 @@ export default function Disposition() {
     <div className="app">
       <aside className={`menu ${ouvert ? 'ouvert' : ''}`}>
         <div className="menu-marque">
-          <div className="logo"><GraduationCap size={20} /></div>
-          <div><strong>Suivi des présences</strong><span>Cours à domicile</span></div>
+          <div className="logo-marque"><img src="/logo-komenan.png" alt="" /></div>
+          <div><strong>KOMENAN FORMATION</strong><span>Suivi des présences</span></div>
         </div>
         <nav onClick={() => setOuvert(false)}>
           {MENU.map(([section, liens]) => {
@@ -72,7 +72,8 @@ export default function Disposition() {
       <div className="contenu">
         <div className="barre-haut">
           <button onClick={() => setOuvert(!ouvert)} aria-label="Ouvrir le menu"><IconeMenu size={22} /></button>
-          <strong>Suivi des présences</strong>
+          <img className="logo-barre" src="/logo-komenan.png" alt="" />
+          <strong>KOMENAN FORMATION</strong>
         </div>
         <main className="page"><Outlet /></main>
       </div>

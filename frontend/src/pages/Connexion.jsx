@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { GraduationCap, QrCode, MapPin, ShieldCheck, Clock } from 'lucide-react';
+import { QrCode, MapPin, ShieldCheck, Clock } from 'lucide-react';
 import { useAuth } from '../auth.jsx';
 import { api } from '../api.js';
 import { Alerte, Champ } from '../composants/ui.jsx';
@@ -10,8 +10,8 @@ function Cadre({ children }) {
     <div className="ecran-connexion">
       <div className="connexion-visuel">
         <div className="menu-marque" style={{ padding: 0 }}>
-          <div className="logo"><GraduationCap size={20} /></div>
-          <div><strong>Suivi des présences</strong><span>Cours à domicile</span></div>
+          <div className="logo-marque"><img src="/logo-komenan.png" alt="Logo KOMENAN FORMATION" /></div>
+          <div><strong>KOMENAN FORMATION</strong><span>Suivi des présences des cours à domicile</span></div>
         </div>
         <div>
           <h2>Des présences vérifiées pour chaque cours dispensé à domicile.</h2>
@@ -24,7 +24,7 @@ function Cadre({ children }) {
         </div>
         <p style={{ fontSize: 12 }}>Abidjan, Côte d'Ivoire</p>
       </div>
-      <div className="connexion-form"><div className="boite">{children}</div></div>
+      <div className="connexion-form"><div className="boite"><img className="logo-complet" src="/logo-komenan-complet.png" alt="KOMENAN FORMATION" />{children}</div></div>
     </div>
   );
 }

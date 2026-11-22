@@ -1,10 +1,20 @@
+/* Charte graphique KOMENAN FORMATION v1.0 :
+   bleu profond #102F87 (principal), bleu vif #087FE0, orange #F15A24, violet #5824B8,
+   vert #23945B, magenta #C51A83, jaune #F4C21B, blanc.
+   Les couleurs d'état (rouge, orange, vert) restent fonctionnelles pour rester lisibles. */
 :root {
-  --marine: #142D4E;
-  --marine-2: #1D3B63;
-  --bleu: #2563EB;
-  --bleu-clair: #EFF4FF;
-  --turquoise: #14B8A6;
-  --turquoise-clair: #E6F7F5;
+  --marine: #102F87;
+  --marine-2: #1B3E9E;
+  --marine-3: #0B2368;
+  --bleu: #087FE0;
+  --bleu-texte: #0868B8;
+  --bleu-clair: #EAF4FD;
+  --orange-marque: #F15A24;
+  --violet: #5824B8;
+  --jaune: #F4C21B;
+  --turquoise: #23945B;
+  --turquoise-clair: #E9F6EF;
+  --police-titres: 'Montserrat', 'Open Sans', system-ui, sans-serif;
   --gris: #F1F5F9;
   --gris-2: #E2E8F0;
   --bord: #D7DEE8;
@@ -27,39 +37,42 @@
 html, body, #racine { height: 100%; }
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   color: var(--texte);
   background: var(--gris);
   -webkit-font-smoothing: antialiased;
 }
-a { color: var(--bleu); text-decoration: none; }
+a { color: var(--bleu-texte); text-decoration: none; }
 a:hover { text-decoration: underline; }
-h1, h2, h3 { margin: 0; color: var(--marine); }
+h1, h2, h3 { margin: 0; color: var(--marine); font-family: var(--police-titres); font-weight: 600; }
+h1 { font-weight: 700; }
 button { font: inherit; }
 
 /* ---------- Disposition ---------- */
 .app { display: flex; min-height: 100%; }
 .menu {
-  width: var(--largeur-menu); background: var(--marine); color: #CBD5E1; flex: none;
+  width: var(--largeur-menu); background: var(--marine); color: #D5DEF5; flex: none;
   display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; overflow-y: auto;
 }
 .menu-marque { display: flex; align-items: center; gap: 10px; padding: 18px 18px 14px; color: #fff; }
-.menu-marque .logo { width: 36px; height: 36px; border-radius: 9px; background: var(--turquoise); display: grid; place-items: center; flex: none; }
-.menu-marque strong { display: block; font-size: 14px; line-height: 1.2; }
-.menu-marque span { font-size: 12px; color: #94A3B8; }
-.menu-section { padding: 14px 18px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #7C8DA6; }
+/* Le logo est toujours posé sur un fond blanc (règle d'utilisation de la charte). */
+.logo-marque { width: 44px; height: 44px; border-radius: 12px; background: #fff; display: grid; place-items: center; flex: none; padding: 4px; }
+.logo-marque img { width: 100%; height: 100%; object-fit: contain; display: block; mix-blend-mode: multiply; }
+.menu-marque strong { display: block; font-family: var(--police-titres); font-weight: 700; font-size: 14px; line-height: 1.2; letter-spacing: .02em; }
+.menu-marque span { font-size: 12px; color: #B8C6EC; }
+.menu-section { padding: 14px 18px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #93A6DA; font-family: var(--police-titres); font-weight: 600; }
 .menu nav a {
   display: flex; align-items: center; gap: 10px; margin: 1px 10px; padding: 8px 10px; border-radius: 8px;
-  color: #CBD5E1; font-weight: 500;
+  color: #D5DEF5; font-weight: 500;
 }
 .menu nav a:hover { background: var(--marine-2); color: #fff; text-decoration: none; }
-.menu nav a.active { background: var(--bleu); color: #fff; }
+.menu nav a.active { background: rgba(255, 255, 255, .14); color: #fff; box-shadow: inset 3px 0 0 var(--orange-marque); font-weight: 600; }
 .menu nav a .compteur { margin-left: auto; background: var(--rouge); color: #fff; font-size: 11px; border-radius: 10px; padding: 0 7px; font-weight: 600; }
 .menu-pied { margin-top: auto; padding: 14px 18px; border-top: 1px solid var(--marine-2); font-size: 12px; }
 .menu-pied .nom { color: #fff; font-weight: 600; font-size: 13px; }
-.menu-pied button { margin-top: 8px; background: none; border: 0; color: #CBD5E1; padding: 0; cursor: pointer; display: flex; gap: 6px; align-items: center; }
+.menu-pied button { margin-top: 8px; background: none; border: 0; color: #D5DEF5; padding: 0; cursor: pointer; display: flex; gap: 6px; align-items: center; }
 .menu-pied button:hover { color: #fff; }
 
 .contenu { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -83,13 +96,13 @@ button { font: inherit; }
 .indicateur .icone { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; flex: none; }
 .indicateur .valeur { font-size: 24px; font-weight: 700; color: var(--marine); line-height: 1.1; }
 .indicateur .libelle { font-size: 12.5px; color: var(--texte-2); }
-.ton-bleu { background: var(--bleu-clair); color: var(--bleu); }
-.ton-turquoise { background: var(--turquoise-clair); color: #0F766E; }
+.ton-bleu { background: var(--bleu-clair); color: var(--bleu-texte); }
+.ton-turquoise { background: var(--turquoise-clair); color: #1B7347; }
 .ton-vert { background: var(--vert-clair); color: var(--vert); }
 .ton-orange { background: var(--orange-clair); color: var(--orange); }
 .ton-rouge { background: var(--rouge-clair); color: var(--rouge); }
 .ton-neutre { background: var(--gris); color: var(--texte-2); }
-.ton-marine { background: #E8EDF5; color: var(--marine); }
+.ton-marine { background: #E7ECF8; color: var(--marine); }
 
 /* ---------- Boutons ---------- */
 .bouton {
@@ -97,14 +110,14 @@ button { font: inherit; }
   border-radius: 8px; border: 1px solid transparent; font-weight: 600; cursor: pointer; white-space: nowrap; font-size: 13.5px;
 }
 .bouton:disabled { opacity: .55; cursor: not-allowed; }
-.bouton-principal { background: var(--bleu); color: #fff; }
-.bouton-principal:hover:not(:disabled) { background: #1D4ED8; }
+.bouton-principal { background: var(--marine); color: #fff; }
+.bouton-principal:hover:not(:disabled) { background: var(--marine-3); }
 .bouton-secondaire { background: var(--blanc); color: var(--marine); border-color: var(--bord); }
 .bouton-secondaire:hover:not(:disabled) { background: var(--gris); }
 .bouton-danger { background: var(--rouge); color: #fff; }
 .bouton-danger:hover:not(:disabled) { background: #B91C1C; }
 .bouton-succes { background: var(--vert); color: #fff; }
-.bouton-fantome { background: none; color: var(--bleu); padding: 0 8px; }
+.bouton-fantome { background: none; color: var(--bleu-texte); padding: 0 8px; }
 .bouton-fantome:hover:not(:disabled) { background: var(--bleu-clair); }
 .bouton-petit { height: 30px; padding: 0 10px; font-size: 12.5px; }
 .bouton-icone { width: 32px; height: 32px; padding: 0; border-radius: 8px; background: none; border: 0; color: var(--texte-2); cursor: pointer; display: inline-grid; place-items: center; }
@@ -141,7 +154,7 @@ input.saisie, select.saisie, textarea.saisie {
 }
 textarea.saisie { height: auto; min-height: 84px; padding: 8px 10px; resize: vertical; }
 select.saisie[multiple] { height: auto; min-height: 110px; padding: 4px; }
-.saisie:focus { outline: 3px solid rgba(37, 99, 235, .18); border-color: var(--bleu); }
+.saisie:focus { outline: 3px solid rgba(8, 127, 224, .22); border-color: var(--bleu); }
 .saisie.en-erreur { border-color: var(--rouge); }
 .recherche { position: relative; }
 .recherche svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--texte-3); }
@@ -185,7 +198,7 @@ select.saisie[multiple] { height: auto; min-height: 110px; padding: 4px; }
 .pagination { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-top: 1px solid var(--gris-2); color: var(--texte-2); font-size: 13px; }
 .onglets { display: flex; gap: 4px; border-bottom: 1px solid var(--gris-2); margin-bottom: 16px; overflow-x: auto; }
 .onglets button { background: none; border: 0; padding: 10px 14px; font-weight: 600; color: var(--texte-2); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
-.onglets button.actif { color: var(--bleu); border-bottom-color: var(--bleu); }
+.onglets button.actif { color: var(--marine); border-bottom-color: var(--orange-marque); }
 .liste-def { display: grid; grid-template-columns: 170px 1fr; gap: 8px 14px; margin: 0; }
 .liste-def dt { color: var(--texte-2); }
 .liste-def dd { margin: 0; font-weight: 500; }
@@ -196,7 +209,7 @@ select.saisie[multiple] { height: auto; min-height: 110px; padding: 4px; }
 .liste-simple .secondaire { color: var(--texte-3); font-size: 12.5px; }
 .chronologie { list-style: none; margin: 0; padding: 0; }
 .chronologie li { position: relative; padding: 0 0 14px 20px; border-left: 2px solid var(--gris-2); margin-left: 6px; }
-.chronologie li::before { content: ''; position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--bleu); }
+.chronologie li::before { content: ''; position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--orange-marque); }
 .chronologie li.rejete::before { background: var(--rouge); }
 .chronologie li:last-child { border-left-color: transparent; }
 .texte-secondaire { color: var(--texte-2); }
@@ -208,7 +221,7 @@ select.saisie[multiple] { height: auto; min-height: 110px; padding: 4px; }
 .mt { margin-top: 16px; }
 .mb { margin-bottom: 16px; }
 .code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; background: var(--gris); padding: 1px 6px; border-radius: 4px; }
-.lien-bouton { background: none; border: 0; color: var(--bleu); cursor: pointer; padding: 0; font-weight: 600; }
+.lien-bouton { background: none; border: 0; color: var(--bleu-texte); cursor: pointer; padding: 0; font-weight: 600; }
 .lien-bouton:hover { text-decoration: underline; }
 
 /* ---------- Calendrier ---------- */
@@ -227,12 +240,12 @@ select.saisie[multiple] { height: auto; min-height: 110px; padding: 4px; }
 
 /* ---------- Connexion ---------- */
 .ecran-connexion { min-height: 100%; display: grid; grid-template-columns: 1fr 1fr; }
-.connexion-visuel { background: linear-gradient(160deg, var(--marine) 0%, #0F3A63 60%, #0E5D66 100%); color: #fff; padding: 48px; display: flex; flex-direction: column; justify-content: space-between; }
+.connexion-visuel { background: linear-gradient(155deg, var(--marine) 0%, #1B3E9E 55%, var(--violet) 130%); color: #fff; padding: 48px; display: flex; flex-direction: column; justify-content: space-between; }
 .connexion-visuel h2 { color: #fff; font-size: 28px; line-height: 1.25; max-width: 420px; }
-.connexion-visuel p { color: #CBD5E1; max-width: 420px; }
+.connexion-visuel p { color: #D5DEF5; max-width: 420px; }
 .connexion-visuel ul { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; }
 .connexion-visuel li { display: flex; gap: 10px; align-items: center; color: #E2E8F0; }
-.connexion-visuel li svg { color: var(--turquoise); flex: none; }
+.connexion-visuel li svg { color: var(--jaune); flex: none; }
 .connexion-form { display: flex; align-items: center; justify-content: center; padding: 32px 20px; background: #fff; }
 .connexion-form .boite { width: 100%; max-width: 380px; }
 .connexion-form h1 { font-size: 24px; margin-bottom: 6px; }
@@ -275,3 +288,14 @@ select.saisie[multiple] { height: auto; min-height: 110px; padding: 4px; }
 .liste-simple li > div:first-child { min-width: 0; }
 .liste-simple li .badge, .liste-simple li > span:last-child { flex: none; }
 .menu { min-height: 100vh; }
+
+/* ---------- Marque KOMENAN FORMATION ---------- */
+.barre-haut .logo-barre { width: 30px; height: 30px; background: #fff; border-radius: 8px; padding: 2px; object-fit: contain; }
+.barre-haut strong { font-family: var(--police-titres); font-weight: 700; letter-spacing: .02em; }
+.connexion-visuel .logo-marque { width: 64px; height: 64px; border-radius: 16px; padding: 6px; }
+.connexion-visuel .menu-marque strong { font-size: 18px; }
+.connexion-visuel .menu-marque span { font-size: 13px; }
+.indicateur .valeur, .fiche-qr h1 { font-family: var(--police-titres); }
+.fiche-qr { border-color: var(--marine); }
+.fiche-qr .fiche-qr-logo { width: 110px; height: auto; display: block; margin: 0 auto 10px; mix-blend-mode: multiply; }
+.connexion-form .logo-complet { display: block; width: 120px; height: auto; margin: 0 0 20px; mix-blend-mode: multiply; }

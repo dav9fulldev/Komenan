@@ -3,22 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Suivi des présences – Cours à domicile</title>
+  <title>KOMENAN FORMATION – Suivi des présences</title>
   <meta name="description" content="Plateforme de vérification des présences des enseignants intervenant à domicile : pointage par QR Code, contrôle serveur, géolocalisation, anomalies et rapports.">
-  <meta name="theme-color" content="#142D4E">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23142D4E'/%3E%3Cpath d='M27 13 16 8 5 13l11 5 11-5z' fill='none' stroke='%2314B8A6' stroke-width='2.4' stroke-linejoin='round'/%3E%3Cpath d='M9 15v5c4 3 10 3 14 0v-5' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#102F87">
+  <link rel="icon" href="logo-komenan.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --marine: #142D4E; --bleu: #2563EB; --turquoise: #14B8A6; --gris: #F1F5F9; --gris-2: #E2E8F0;
+      --marine: #102F87; --bleu: #087FE0; --bleu-texte: #0868B8; --orange-marque: #F15A24; --violet: #5824B8; --jaune: #F4C21B; --turquoise: #23945B; --gris: #F1F5F9; --gris-2: #E2E8F0;
       --texte: #0F172A; --texte-2: #475569; --rouge: #DC2626; --orange: #D97706; --vert: #059669; --blanc: #fff;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: var(--texte); background: var(--blanc); line-height: 1.6; font-size: 16px; }
-    a { color: var(--bleu); }
+    body { margin: 0; font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: var(--texte); background: var(--blanc); line-height: 1.6; font-size: 16px; }
+    a { color: var(--bleu-texte); }
     img { max-width: 100%; height: auto; }
     .conteneur { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
-    h1, h2, h3 { color: var(--marine); line-height: 1.25; margin: 0; }
+    h1, h2, h3 { color: var(--marine); line-height: 1.25; margin: 0; font-family: "Montserrat", "Open Sans", sans-serif; font-weight: 600; }
+    h1 { font-weight: 700; }
     h2 { font-size: clamp(24px, 3.2vw, 32px); margin-bottom: 12px; }
     h3 { font-size: 18px; margin-bottom: 6px; }
     p { margin: 0 0 12px; }
@@ -27,28 +31,30 @@
     section.gris { background: var(--gris); }
 
     /* En-tête */
-    header.barre { position: sticky; top: 0; z-index: 10; background: rgba(20, 45, 78, .97); backdrop-filter: blur(6px); }
+    header.barre { position: sticky; top: 0; z-index: 10; background: rgba(16, 47, 135, .97); backdrop-filter: blur(6px); }
     header.barre .conteneur { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
-    .marque { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 700; }
-    .marque .logo { width: 34px; height: 34px; border-radius: 9px; background: var(--turquoise); display: grid; place-items: center; }
+    .marque { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 700; font-family: "Montserrat", "Open Sans", sans-serif; letter-spacing: .02em; }
+    .marque .logo { width: 40px; height: 40px; border-radius: 10px; background: #fff; padding: 3px; display: grid; place-items: center; }
+    .marque .logo img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+    .marque small { display: block; font-family: "Open Sans", sans-serif; font-weight: 400; font-size: 12px; color: #B8C6EC; letter-spacing: 0; }
     nav.liens { display: flex; gap: 20px; }
-    nav.liens a { color: #CBD5E1; text-decoration: none; font-size: 14px; font-weight: 500; }
+    nav.liens a { color: #D5DEF5; text-decoration: none; font-size: 14px; font-weight: 500; }
     nav.liens a:hover { color: #fff; }
 
     /* Héros */
-    .heros { background: linear-gradient(160deg, var(--marine) 0%, #0F3A63 55%, #0E5D66 100%); color: #fff; padding: 80px 0 96px; }
+    .heros { background: linear-gradient(155deg, var(--marine) 0%, #1B3E9E 55%, var(--violet) 130%); color: #fff; padding: 80px 0 96px; }
     .heros .grille { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
-    .etiquette { display: inline-block; background: rgba(20, 184, 166, .18); color: #5EEAD4; border: 1px solid rgba(94, 234, 212, .35); padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; margin-bottom: 18px; }
+    .etiquette { display: inline-block; background: rgba(244, 194, 27, .14); color: var(--jaune); border: 1px solid rgba(244, 194, 27, .4); padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; margin-bottom: 18px; }
     .heros h1 { color: #fff; font-size: clamp(30px, 4.6vw, 46px); margin-bottom: 18px; }
-    .heros p { color: #CBD5E1; font-size: 18px; }
+    .heros p { color: #D5DEF5; font-size: 18px; }
     .boutons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
     .bouton { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 15px; }
-    .bouton.principal { background: var(--bleu); color: #fff; }
-    .bouton.principal:hover { background: #1D4ED8; }
+    .bouton.principal { background: #fff; color: var(--marine); box-shadow: inset 0 -3px 0 var(--orange-marque); }
+    .bouton.principal:hover { background: #FFF4EF; }
     .bouton.secondaire { background: rgba(255, 255, 255, .1); color: #fff; border: 1px solid rgba(255, 255, 255, .25); }
     .apercu { position: relative; }
     .apercu .ecran { border-radius: 12px; box-shadow: 0 30px 60px rgba(0, 0, 0, .35); width: 100%; display: block; border: 1px solid rgba(255, 255, 255, .15); }
-    .apercu .mobile { position: absolute; width: 30%; right: -16px; bottom: -40px; border-radius: 18px; border: 4px solid #0B1B30; box-shadow: 0 20px 40px rgba(0, 0, 0, .4); }
+    .apercu .mobile { position: absolute; width: 30%; right: -16px; bottom: -40px; border-radius: 18px; border: 4px solid #0B2368; box-shadow: 0 20px 40px rgba(0, 0, 0, .4); }
 
     /* Problème */
     .probleme { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 32px; }
@@ -56,12 +62,12 @@
     .carte .icone { width: 44px; height: 44px; border-radius: 11px; display: grid; place-items: center; margin-bottom: 14px; }
     .carte p { color: var(--texte-2); margin: 0; font-size: 15px; }
     .t-rouge { background: #FEF2F2; color: var(--rouge); } .t-orange { background: #FFF7ED; color: var(--orange); }
-    .t-bleu { background: #EFF4FF; color: var(--bleu); } .t-turq { background: #E6F7F5; color: #0F766E; } .t-vert { background: #ECFDF5; color: var(--vert); } .t-marine { background: #E8EDF5; color: var(--marine); }
+    .t-bleu { background: #EAF4FD; color: var(--bleu-texte); } .t-turq { background: #E9F6EF; color: #1B7347; } .t-vert { background: #ECFDF5; color: var(--vert); } .t-marine { background: #E7ECF8; color: var(--marine); }
 
     /* Étapes */
     .etapes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 36px; counter-reset: etape; }
     .etape { position: relative; padding: 22px; background: #fff; border-radius: 14px; border: 1px solid var(--gris-2); }
-    .etape::before { counter-increment: etape; content: counter(etape); position: absolute; top: -14px; left: 22px; width: 30px; height: 30px; border-radius: 50%; background: var(--bleu); color: #fff; font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+    .etape::before { counter-increment: etape; content: counter(etape); position: absolute; top: -14px; left: 22px; width: 30px; height: 30px; border-radius: 50%; background: var(--orange-marque); color: #fff; font-weight: 700; display: grid; place-items: center; font-size: 14px; }
     .etape p { color: var(--texte-2); font-size: 15px; margin: 0; }
 
     /* Contrôles */
@@ -103,12 +109,12 @@
     .pile { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
     .pile .carte strong { display: block; color: var(--marine); }
     .pile .carte span { color: var(--texte-2); font-size: 14px; }
-    pre { background: #0B1B30; color: #E2E8F0; padding: 18px 20px; border-radius: 12px; overflow-x: auto; font-size: 14px; line-height: 1.55; margin: 20px 0 0; }
+    pre { background: #0B2368; color: #E2E8F0; padding: 18px 20px; border-radius: 12px; overflow-x: auto; font-size: 14px; line-height: 1.55; margin: 20px 0 0; }
     code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 
-    footer { background: var(--marine); color: #94A3B8; padding: 28px 0; font-size: 14px; }
+    footer { background: var(--marine); color: #B8C6EC; padding: 28px 0; font-size: 14px; }
     footer .conteneur { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-    footer a { color: #CBD5E1; }
+    footer a { color: #fff; }
 
     @media (max-width: 900px) {
       nav.liens { display: none; }
@@ -129,8 +135,8 @@
   <header class="barre">
     <div class="conteneur">
       <a class="marque" href="#">
-        <span class="logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></span>
-        Suivi des présences
+        <span class="logo"><img src="logo-komenan.png" alt=""></span>
+        <span>KOMENAN FORMATION<small>Suivi des présences</small></span>
       </a>
       <nav class="liens">
         <a href="#fonctionnement">Fonctionnement</a>
@@ -305,7 +311,7 @@ cd frontend && npm install && npm run build   # servi par l'API</code></pre>
 
   <footer>
     <div class="conteneur">
-      <span>Suivi des présences des enseignants à domicile — première version (MVP)</span>
+      <span>KOMENAN FORMATION · Suivi des présences des enseignants à domicile — première version (MVP)</span>
       <a href="https://github.com/dav9fulldev/Komenan">Dépôt GitHub</a>
     </div>
   </footer>

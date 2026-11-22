@@ -75,3 +75,15 @@ cd backend && npm test
 
 ## Page de présentation
 Une présentation statique de la plateforme est publiée par GitHub Pages depuis le dossier `docs/` : https://dav9fulldev.github.io/Komenan/
+
+## Identité visuelle
+
+L'interface applique la charte graphique KOMENAN FORMATION v1.0 :
+
+- **Couleurs** : bleu profond `#102F87` (principal), orange `#F15A24` (accent), bleu vif `#087FE0`, violet `#5824B8`, vert `#23945B`, jaune `#F4C21B`.
+- **Polices** : Montserrat (titres) et Open Sans (texte). Elles sont embarquées dans l'application et ne dépendent pas d'Internet.
+- **Logo officiel** : `marque/logo-komenan-officiel.png`. C'est le fichier source, à ne pas modifier. Les versions web en sont dérivées :
+  - `logo-komenan.png` : symbole seul, pour les petits espaces ;
+  - `logo-komenan-complet.png` : logo complet, pour la connexion et la fiche QR.
+
+Les boutons utilisent le bleu profond. Un texte blanc sur l'orange ou le bleu vif ne serait pas assez contrasté. Les couleurs d'état restent distinctes pour la lisibilité : rouge pour l'absence, orange pour le retard, vert pour l'arrivée à l'heure.
