@@ -4,13 +4,14 @@ import { QrCode, MapPin, ShieldCheck, Clock } from 'lucide-react';
 import { useAuth } from '../auth.jsx';
 import { api } from '../api.js';
 import { Alerte, Champ } from '../composants/ui.jsx';
+import { ComptesDemo } from '../demo/BandeauDemo.jsx';
 
 function Cadre({ children }) {
   return (
     <div className="ecran-connexion">
       <div className="connexion-visuel">
         <div className="menu-marque" style={{ padding: 0 }}>
-          <div className="logo-marque"><img src="/logo-komenan.png" alt="Logo KOMENAN FORMATION" /></div>
+          <div className="logo-marque"><img src={`${import.meta.env.BASE_URL}logo-komenan.png`} alt="Logo KOMENAN FORMATION" /></div>
           <div><strong>KOMENAN FORMATION</strong><span>Suivi des présences des cours à domicile</span></div>
         </div>
         <div>
@@ -24,7 +25,7 @@ function Cadre({ children }) {
         </div>
         <p style={{ fontSize: 12 }}>Abidjan, Côte d'Ivoire</p>
       </div>
-      <div className="connexion-form"><div className="boite"><img className="logo-complet" src="/logo-komenan-complet.png" alt="KOMENAN FORMATION" />{children}</div></div>
+      <div className="connexion-form"><div className="boite"><img className="logo-complet" src={`${import.meta.env.BASE_URL}logo-komenan-complet.png`} alt="KOMENAN FORMATION" />{children}</div></div>
     </div>
   );
 }
@@ -55,6 +56,7 @@ export default function Connexion() {
     <Cadre>
       <h1>Connexion</h1>
       <p className="texte-secondaire" style={{ marginTop: 0, marginBottom: 24 }}>Espace réservé à l'administration et aux superviseurs.</p>
+      {import.meta.env.VITE_DEMO === '1' && <ComptesDemo remplir={(adresse) => { setEmail(adresse); setMdp('DemoPresences2026'); }} />}
       {erreur && <Alerte>{erreur}</Alerte>}
       <form onSubmit={soumettre} noValidate>
         <Champ libelle="Adresse e-mail" id="email">

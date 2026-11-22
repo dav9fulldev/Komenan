@@ -1,3 +1,4 @@
+import { maintenantApp } from './demo/horlogeDemo.js';
 // Formatage des dates et heures dans le fuseau de la structure (Abidjan).
 const FUSEAU = 'Africa/Abidjan';
 const f = (opts) => new Intl.DateTimeFormat('fr-FR', { timeZone: FUSEAU, ...opts });
@@ -15,7 +16,7 @@ export const duree = (min) => (min == null ? '—' : `${Math.floor(min / 60)} h 
 export const telephone = (t) => (t ? t.replace(/^\+225(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, '$1 $2 $3 $4 $5') : '—');
 
 export function aujourdhui() {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: FUSEAU }).format(new Date());
+  return new Intl.DateTimeFormat('en-CA', { timeZone: FUSEAU }).format(maintenantApp());
 }
 export function decalerJours(iso, n) {
   const d = new Date(`${iso}T00:00:00Z`);

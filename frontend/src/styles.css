@@ -299,3 +299,10 @@ select.saisie[multiple] { height: auto; min-height: 110px; padding: 4px; }
 .fiche-qr { border-color: var(--marine); }
 .fiche-qr .fiche-qr-logo { width: 110px; height: auto; display: block; margin: 0 auto 10px; mix-blend-mode: multiply; }
 .connexion-form .logo-complet { display: block; width: 120px; height: auto; margin: 0 0 20px; mix-blend-mode: multiply; }
+
+/* ---------- Démonstration en ligne (GitHub Pages) ---------- */
+.bandeau-demo { background: #FFF4D6; color: #6B4E00; border-bottom: 1px solid #F4C21B; padding: 8px 28px; font-size: 13px; }
+.comptes-demo { background: var(--bleu-clair); border: 1px solid #C9E1F8; border-radius: 10px; padding: 12px 14px; margin-bottom: 18px; font-size: 13px; color: var(--texte-2); display: grid; gap: 8px; }
+.comptes-demo strong { color: var(--marine); }
+.comptes-demo-boutons { display: flex; gap: 8px; flex-wrap: wrap; }
+.comptes-demo-boutons .bouton { height: 32px; }

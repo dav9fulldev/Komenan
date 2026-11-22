@@ -73,8 +73,24 @@ cd backend && npm test
 - Sauvegardes régulières de la base.
 - Formalités de protection des données personnelles (loi n° 2013-450, ARTCI) : la géolocalisation est une donnée personnelle.
 
-## Page de présentation
-Une présentation statique de la plateforme est publiée par GitHub Pages depuis le dossier `docs/` : https://dav9fulldev.github.io/Komenan/
+## Démonstration en ligne (GitHub Pages)
+
+Une démonstration navigable de la plateforme est publiée depuis le dossier `docs/` : https://dav9fulldev.github.io/Komenan/
+
+- **Accès** : comptes `admin@demo.local` et `superviseur@demo.local`, mot de passe `DemoPresences2026`. Des boutons de l'écran de connexion remplissent les champs.
+- **Données** : entièrement fictives (DÉMO). Elles viennent d'un instantané de la vraie API, pris un lundi à 17 h 20. Les dates sont avancées d'un nombre entier de semaines pour paraître récentes.
+- **Fonctionnement** : GitHub Pages n'exécute ni Node.js ni MySQL. L'interface répond donc à partir de cet instantané (`frontend/src/demo/`). Filtres et pagination sont rejoués dans le navigateur. Les modifications sont simulées en mémoire et disparaissent au rechargement. Les exports PDF/Excel sont pré-générés.
+- **Pointage** : les QR Codes de la démonstration ouvrent la page de pointage mobile. Elle reprend les contrôles d'identité, d'affectation et de GPS, mais **n'enregistre rien**.
+- **Limite** : cette démonstration ne remplace pas un hébergement réel. Pour de vrais pointages, il faut un serveur Node.js avec MySQL en HTTPS.
+
+Pour régénérer la démonstration après une modification :
+
+```bash
+frontend/scripts/demo/generer-instantane.sh   # base temporaire, heure simulée, capture de l'API (Docker MySQL requis)
+cd frontend && npm run build:demo             # construit docs/ (base /Komenan/)
+```
+
+`generer-instantane.sh` utilise une base séparée, `presences_vitrine`, puis la supprime : la base de développement n'est pas touchée.
 
 ## Identité visuelle
 

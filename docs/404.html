@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>KOMENAN FORMATION – Redirection</title>
+<script>
+  var base = "/Komenan/";
+  var chemin = location.pathname;
+  if (chemin.indexOf(base + 'p/') === 0) {
+    location.replace(base + 'pointage/#' + chemin.slice((base + 'p/').length));
+  } else {
+    try { sessionStorage.setItem('redirection_spa', chemin + location.search + location.hash); } catch (e) {}
+    location.replace(base);
+  }
+</script></head><body></body></html>

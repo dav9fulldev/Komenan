@@ -1,3 +1,4 @@
+import { BandeauDemo } from '../demo/BandeauDemo.jsx';
 import { useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
@@ -43,7 +44,7 @@ export default function Disposition() {
     <div className="app">
       <aside className={`menu ${ouvert ? 'ouvert' : ''}`}>
         <div className="menu-marque">
-          <div className="logo-marque"><img src="/logo-komenan.png" alt="" /></div>
+          <div className="logo-marque"><img src={`${import.meta.env.BASE_URL}logo-komenan.png`} alt="" /></div>
           <div><strong>KOMENAN FORMATION</strong><span>Suivi des présences</span></div>
         </div>
         <nav onClick={() => setOuvert(false)}>
@@ -72,9 +73,10 @@ export default function Disposition() {
       <div className="contenu">
         <div className="barre-haut">
           <button onClick={() => setOuvert(!ouvert)} aria-label="Ouvrir le menu"><IconeMenu size={22} /></button>
-          <img className="logo-barre" src="/logo-komenan.png" alt="" />
+          <img className="logo-barre" src={`${import.meta.env.BASE_URL}logo-komenan.png`} alt="" />
           <strong>KOMENAN FORMATION</strong>
         </div>
+        <BandeauDemo />
         <main className="page"><Outlet /></main>
       </div>
     </div>

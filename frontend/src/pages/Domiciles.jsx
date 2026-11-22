@@ -273,7 +273,7 @@ export function ImpressionQr() {
         <button className="bouton bouton-principal" onClick={() => window.print()}><Printer size={15} /> Imprimer</button>
       </div>
       <div className="fiche-qr">
-        <img className="fiche-qr-logo" src="/logo-komenan-complet.png" alt="KOMENAN FORMATION" />
+        <img className="fiche-qr-logo" src={`${import.meta.env.BASE_URL}logo-komenan-complet.png`} alt="KOMENAN FORMATION" />
         <h1>Pointage des cours</h1>
         <p className="texte-secondaire">Domicile <strong>{qr.domicile_code}</strong> · {qr.marche}</p>
         <img src={qr.image} alt="QR Code de pointage" />

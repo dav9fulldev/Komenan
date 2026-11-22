@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FileDown, FileSpreadsheet } from 'lucide-react';
-import { chaineRequete } from '../api.js';
+import { chaineRequete, lienApi } from '../api.js';
 import { useAuth } from '../auth.jsx';
 import { useDonnees, useReferentiels } from '../hooks.js';
 import { AlerteErreur, Carte, EntetePage, Onglets, Tableau } from '../composants/ui.jsx';
@@ -27,8 +27,8 @@ export default function Rapports() {
     <>
       <EntetePage titre="Rapports et statistiques" description="Calculés à partir des séances passées et des pointages validés par le serveur.">
         {peut('rapports.exporter') && <>
-          <a className="bouton bouton-secondaire" href={`/api/rapports/${type}${requete}&format=pdf`}><FileDown size={15} /> Exporter en PDF</a>
-          <a className="bouton bouton-secondaire" href={`/api/rapports/${type}${requete}&format=xlsx`}><FileSpreadsheet size={15} /> Exporter en Excel</a>
+          <a className="bouton bouton-secondaire" href={lienApi(`/rapports/${type}${requete}&format=pdf`)}><FileDown size={15} /> Exporter en PDF</a>
+          <a className="bouton bouton-secondaire" href={lienApi(`/rapports/${type}${requete}&format=xlsx`)}><FileSpreadsheet size={15} /> Exporter en Excel</a>
         </>}
       </EntetePage>
       <Onglets onglets={TYPES} actif={type} onChange={setType} />

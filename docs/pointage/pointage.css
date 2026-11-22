@@ -1,0 +1,56 @@
+@font-face { font-family: "Open Sans"; font-weight: 400; font-display: swap; src: url(polices/open-sans-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Open Sans"; font-weight: 600; font-display: swap; src: url(polices/open-sans-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "Open Sans"; font-weight: 700; font-display: swap; src: url(polices/open-sans-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "Montserrat"; font-weight: 700; font-display: swap; src: url(polices/montserrat-latin-700-normal.woff2) format("woff2"); }
+:root {
+  --marine: #102F87; --bleu: #087FE0; --bleu-texte: #0868B8; --orange-marque: #F15A24; --turquoise: #23945B; --gris: #F1F5F9;
+  --texte: #0F172A; --texte-2: #475569; --bord: #CBD5E1; --rouge: #DC2626; --orange: #D97706; --vert: #059669;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: var(--gris); color: var(--texte); font-size: 17px; line-height: 1.45; }
+.entete { display: flex; align-items: center; gap: 12px; background: var(--marine); border-bottom: 4px solid var(--orange-marque); color: #fff; padding: 14px 16px; }
+.logo { width: 48px; height: 48px; border-radius: 12px; background: #fff; padding: 5px; flex: none; }
+.logo img { width: 100%; height: 100%; object-fit: contain; display: block; mix-blend-mode: multiply; }
+.marque { margin: 0; font-family: "Montserrat", "Open Sans", sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .08em; color: #B8C6EC; }
+h1 { font-family: "Montserrat", "Open Sans", sans-serif; font-weight: 700; font-size: 18px; margin: 0; }
+.sous-titre { margin: 2px 0 0; font-size: 13px; opacity: .8; }
+main { max-width: 480px; margin: 0 auto; padding: 16px; }
+.carte { background: #fff; border-radius: 14px; padding: 20px 16px; box-shadow: 0 1px 3px rgba(15,23,42,.08); }
+.carte h2 { font-family: "Montserrat", "Open Sans", sans-serif; font-size: 20px; margin: 0 0 6px; color: var(--marine); }
+.centre { text-align: center; }
+.aide { color: var(--texte-2); margin: 0 0 16px; font-size: 15px; }
+.note { color: var(--texte-2); font-size: 14px; margin: 14px 0 0; }
+label { display: block; font-weight: 600; margin: 14px 0 6px; font-size: 15px; }
+input[type=tel], input[type=text], textarea { width: 100%; font: inherit; font-size: 18px; padding: 13px 12px; border: 1.5px solid var(--bord); border-radius: 10px; background: #fff; color: var(--texte); }
+input:focus, textarea:focus { outline: 3px solid rgba(8,127,224,.25); border-color: var(--bleu); }
+textarea { resize: vertical; min-height: 110px; }
+.case { display: flex; align-items: center; gap: 8px; font-weight: 400; color: var(--texte-2); }
+.case input { width: 20px; height: 20px; }
+.bouton { display: block; width: 100%; min-height: 52px; margin-top: 18px; border: 0; border-radius: 12px; font: inherit; font-weight: 700; font-size: 17px; cursor: pointer; }
+.principal { background: var(--marine); color: #fff; }
+.principal:disabled { opacity: .6; }
+.secondaire { background: var(--gris); color: var(--marine); margin-top: 10px; }
+.erreur { color: var(--rouge); background: #FEF2F2; border-radius: 8px; padding: 10px 12px; margin: 14px 0 0; font-size: 15px; }
+.avertissement { border-top: 6px solid var(--orange); }
+.horaires { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0; }
+.horaires div { background: var(--gris); border-radius: 10px; padding: 10px 6px; text-align: center; }
+.horaires dt { font-size: 12px; color: var(--texte-2); }
+.horaires dd { margin: 2px 0 0; font-size: 19px; font-weight: 700; color: var(--marine); }
+.icone-resultat { width: 72px; height: 72px; border-radius: 50%; margin: 4px auto 12px; display: grid; place-items: center; color: #fff; }
+.icone-resultat svg { width: 38px; height: 38px; }
+#etape-resultat { text-align: center; }
+#etape-resultat.succes { border-top: 6px solid var(--vert); }
+#etape-resultat.succes .icone-resultat { background: var(--vert); }
+#etape-resultat.attention { border-top: 6px solid var(--orange); }
+#etape-resultat.attention .icone-resultat { background: var(--orange); }
+#etape-resultat.info { border-top: 6px solid var(--bleu); }
+#etape-resultat.info .icone-resultat { background: var(--bleu); }
+#etape-resultat.echec { border-top: 6px solid var(--rouge); }
+#etape-resultat.echec .icone-resultat { background: var(--rouge); }
+.roue { width: 44px; height: 44px; border: 4px solid var(--gris); border-top-color: var(--bleu); border-radius: 50%; margin: 8px auto 14px; animation: tourne 0.9s linear infinite; }
+@keyframes tourne { to { transform: rotate(360deg); } }
+.pied { text-align: center; color: var(--texte-2); font-size: 12px; padding: 8px 16px 24px; }
+[hidden] { display: none !important; }
+
+.note-demo { background: #FFF4D6; color: #6B4E00; border: 1px solid #F4C21B; border-radius: 10px; padding: 10px 12px; font-size: 14px; margin-bottom: 14px; }
